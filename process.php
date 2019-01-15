@@ -38,23 +38,25 @@ if (isset($_GET['delete'])){
 if (isset($_GET['edit'])){
     $id = $_GET['edit'];
     $update = true;
-    $result = $mysqli->query("SELECT * FROM data WHERE id=$id") or die($mysqli->error());
-    if (count($result)==1){
-        $row = $result->fetch_array();
-        $name = $row['name'];
-        $location = $row['location'];
+    $result = $mysqli->query("SELECT * FROM data WHERE id='$id'") or die($mysqli->error());
+    if(($result->num_rows) ==1)
+    {
+      $row = $result->fetch_array();
+      $name = $row['name'];
+      $location = $row['location'];
     }
 }
 
 if (isset($_POST['update'])){
-    $id = $_post['id'];
-    $name = $_post['name'];
-    $location = $_post['location'];
+	$id = $_POST['id'];
+    $name = $_POST['name'];
+    $location = $_POST['location'];
 
-    $mysqli->query("UPDATE data SET name='$name',location='$location' WHERE id='$id'") or die($mysqli->error);
-
-    $_SESSION['message'] = "Record has been Updated!";
+	$mysqli->query("UPDATE data SET name= '$name', location= '$location' WHERE id= '$id'");
+	
+	$_SESSION['message'] = "Record has been Updated!";
     $_SESSION['msg-type'] = "warning";
-
+	
     header("location: index.php");
+
 }
